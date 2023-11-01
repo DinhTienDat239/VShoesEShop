@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +22,7 @@ namespace VShoesEShop.Controllers
         }
 
         // GET: Orders
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
               return _context.Orders != null ? 
@@ -27,6 +30,13 @@ namespace VShoesEShop.Controllers
                           Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
         }
 
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> IndexUser(string userEmail)
+        {
+            return _context.Orders != null ?
+                        View(await _context.Orders.Where(o => o.Email == userEmail).ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Orders'  is null.");
+        }
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {

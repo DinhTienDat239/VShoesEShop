@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -111,6 +115,15 @@
                             <a href="/" class="nav-item nav-link">Home</a>
                             <a href="/Products" class="nav-item nav-link">Shop</a>
                             <a href="/Cart" class="nav-item nav-link">Shopping Cart</a>
+                            @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                            {
+                                <a href="/Products/Create" class="nav-item nav-link">Add Products</a>
+                                <a href="/Orders" class="nav-item nav-link">Manage Orders</a>
+                            }
+                            @if (ViewContext.HttpContext.User.IsInRole("User"))
+                            {
+                                <a href="/Orders/IndexUser/?userEmail=@User.Identity?.Name" class="nav-item nav-link">Orders</a>
+                            }
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <partial name="_LoginPartial"/>
@@ -120,7 +133,7 @@
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-1.jpg" alt="Image">
+                            <img class="img-fluid" src="/img/carousel-1.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
@@ -130,7 +143,7 @@
                             </div>
                         </div>
                         <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-2.jpg" alt="Image">
+                            <img class="img-fluid" src="/img/carousel-2.jpg" alt="Image">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
@@ -205,10 +218,10 @@
                 <a href="" class="text-decoration-none">
                     <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">V</span>Shoes Store</h1>
                 </a>
-                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum dolore amet erat.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>vhoes.com@gmail.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+036853265</p>
+                <p>V Shoes is a local store and we sell shoes! as anyone can see relate to our name. Here you will find the best sale price with the best quality.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>23 Jump Street. New York US</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>Vshoes.com@gmail.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+0429484222</p>
             </div>
             <div class="col-lg-8 col-md-12">
                 <div class="row">
